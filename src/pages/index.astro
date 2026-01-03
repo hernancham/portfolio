@@ -1,8 +1,10 @@
 ---
+import ThemeModeSelector from "../components/ThemeModeSelector.astro";
+import ThemeVariantSelector from "../components/ThemeVariantSelector.astro";
 import "../styles/global.css";
 ---
 
-<html lang="es" data-theme="default" class="dark">
+<html lang="es" data-theme="catppuccin" class="dark">
   <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -12,5 +14,7 @@ import "../styles/global.css";
   </head>
   <body class="bg-background h-screen flex items-center justify-center">
     <h1>Astro</h1>
+    <ThemeModeSelector />
+    <ThemeVariantSelector />
   </body>
 </html>

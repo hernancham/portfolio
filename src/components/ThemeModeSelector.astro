@@ -1,0 +1,54 @@
+---
+// ThemeSelector.astro
+---
+
+<div class="relative inline-block">
+  <select
+    id="theme-mode-selector"
+    class="rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm
+           dark:bg-gray-900 dark:border-gray-700 dark:text-white"
+  >
+    <option value="system">System</option>
+    <option value="light">Light</option>
+    <option value="dark">Dark</option>
+  </select>
+</div>
+
+<script is:inline>
+  const select = document.getElementById("theme-mode-selector");
+  const root = document.documentElement;
+
+  const getSystemTheme = () =>
+    window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light";
+
+  const applyTheme = (theme) => {
+    if (theme === "system") {
+      root.classList.toggle("dark", getSystemTheme() === "dark");
+    } else {
+      root.classList.toggle("dark", theme === "dark");
+    }
+  };
+
+  // Init
+  const savedTheme = localStorage.getItem("theme") || "system";
+  select.value = savedTheme;
+  applyTheme(savedTheme);
+
+  // Change handler
+  select.addEventListener("change", (e) => {
+    const theme = e.target.value;
+    localStorage.setItem("theme", theme);
+    applyTheme(theme);
+  });
+
+  // Listen system changes (only when system selected)
+  window
+    .matchMedia("(prefers-color-scheme: dark)")
+    .addEventListener("change", () => {
+      if (localStorage.getItem("theme") === "system") {
+        applyTheme("system");
+      }
+    });
+</script>

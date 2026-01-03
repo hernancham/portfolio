@@ -1,0 +1,37 @@
+---
+// ThemeVariantSelector.astro
+---
+
+<div class="relative inline-block">
+  <select
+    id="theme-variant-selector"
+    class="rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm
+           dark:bg-gray-900 dark:border-gray-700 dark:text-white"
+  >
+    <option value="default">Default</option>
+    <option value="catppuccin">Catppuccin</option>
+    <option value="cosmic-night">Cosmic Night</option>
+    <option value="dracula">Dracula</option>
+    <option value="retro">Retro</option>
+  </select>
+</div>
+
+<script is:inline>
+  document.addEventListener("DOMContentLoaded", () => {
+    const root = document.documentElement;
+    const select = document.getElementById("theme-variant-selector");
+
+    if (!select) return;
+
+    const savedTheme = localStorage.getItem("theme-variant") || "default";
+
+    root.setAttribute("data-theme", savedTheme);
+    select.value = savedTheme;
+
+    select.addEventListener("change", () => {
+      const value = select.value;
+      root.setAttribute("data-theme", value);
+      localStorage.setItem("theme-variant", value);
+    });
+  });
+</script>
